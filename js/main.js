@@ -1,37 +1,49 @@
 var app = document.getElementById("app");
 var self = this;
+var playerStates = 1;
 
 /* Board Setup */
 function createBoard(grid) {
     var boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", "container");
     grid.appendChild(boardContainer);
-    for (var i = 0; i < 3; i++) {
-        var row = document.createElement("div");
-        row.setAttribute("class", "row mx-4");
-        for (var j = 0; j < 3; j++) {
-            var col = document.createElement("div");
-            col.setAttribute("class", "col-4 border");
-            row.appendChild(col);
-            var test = document.createElement("p");
-            test.setAttribute("class", "text-center");
-            test.textContent = "X";
-            col.appendChild(test)
+    var row = document.createElement("div");
+    row.setAttribute("class", "row mx-4");
+    for (var i = 0; i < 9; i++) {
+        var col = document.createElement("div");
+        if (i == 0) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col1 row1 diagLeft");
+        } else if (i == 1) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col2 row1");
+        } else if (i == 2) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col3 row1 diagRight");
+        } else if (i == 3) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col1 row2");
+        } else if (i == 4) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col2 row2 diagLeft diagRight");
+        } else if (i == 5) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col3 row2");
+        } else if (i == 6) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col1 row3 diagRight");
+        } else if (i == 7) {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col2 row3");
+        } else {
+            col.setAttribute("class", "col-4 px-5 py-5 border grid col3 row3 diagLeft");
         }
-        boardContainer.appendChild(row);
+        row.appendChild(col);
     }
-
+    boardContainer.appendChild(row);
 }
 
 /* Page Setup */
 function pageLayout() {
     app.setAttribute("class", "container");
-    for (var i = 0; i< 5; i++) {
+    for (var i = 0; i < 5; i++) {
         var div = document.createElement("div");
-        div.setAttribute("class", "row");
+        div.setAttribute("class", "row mb-4");
         if (i == 0) {
             var title = document.createElement("h1");
-            title.setAttribute("class","display-4 mx-auto");
+            title.setAttribute("class", "display-4 mx-auto mb-6");
             title.textContent = "Tic Tac Toe";
             div.appendChild(title);
         } else if (i == 1) {
@@ -40,3 +52,8 @@ function pageLayout() {
         app.appendChild(div);
     }
 }
+
+var grid = document.getElementsByClassName("grid");
+var gridCheck = [0,0,0,0,0,0,0,0,0];
+console.log(grid);
+console.log(gridCheck.length);
