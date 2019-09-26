@@ -51,9 +51,33 @@ function pageLayout() {
         }
         app.appendChild(div);
     }
+    var grid = document.getElementsByClassName("grid");
+    var checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    console.log(grid);
+    positionCheck(grid, checkGrid);
 }
 
-var grid = document.getElementsByClassName("grid");
-var gridCheck = [0,0,0,0,0,0,0,0,0];
-console.log(grid);
-console.log(gridCheck.length);
+/* Grid Positions */
+var self = this;
+function positionCheck(grid, checkGrid) {
+    var gridUpdate = checkGrid.map(function (pos, i) {
+        grid[i].addEventListener("click", function () {
+            if (pos == false) {
+                console.log("test");
+            } else {
+                console.log("other test");
+            }
+        })
+    });
+
+}
+
+/* Check Win Conditions */
+// var checkRowOne = document.getElementsByClassName("row1");
+// var checkRowTwo = document.getElementsByClassName("row2"); 
+// var checkRowThree = document.getElementsByClassName("row3"); 
+// var checkColOne = document.getElementsByClassName("col1"); 
+// var checkColTwo = document.getElementsByClassName("col2"); 
+// var checkColThree = document.getElementsByClassName("col3"); 
+// var checkDiagLeft = document.getElementsByClassName("diagLeft"); 
+// var checkDiagRight = document.getElementsByClassName("diagRight"); 
