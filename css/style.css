@@ -1,0 +1,18 @@
+
+.manjariFont {
+    font-family: 'Manjari', sans-serif;
+}
+.markerFont {
+    font-family: 'Permanent Marker', cursive;
+}
+.col-4.px-5.py-5.border.grid {
+    position: relative;
+}
+
+html, body {
+    background-color: #ffdccc;
+}
+
+div#0 {
+    border: 5px solid black;
+}
