@@ -15,8 +15,8 @@ function createBoard(grid) {
     for (var i = 0; i < 9; i++) {
         var col = document.createElement("div");
         var letter = document.createElement("h2");
-        letter.setAttribute("class", "manjariFont")
-        var classStr = "col-4 px-5 py-5 border grid"
+        letter.setAttribute("class", "manjariFont position-absolute ")
+        var classStr = "col-4 display-4 position-relative manjariFont px-5 py-5 text-center border border-dark grid"
         col.setAttribute("id", i);
         letter.setAttribute("id", i);
         col.setAttribute("class", classStr);
@@ -44,8 +44,13 @@ function createBoard(grid) {
                     var gameEnd = winCheck(checkGrid);
                     if (gameEnd == 1) {
                         turnCounter.innerHTML = "X is the Winner!";
+                        //resetBtn.removeAttribute("d-none");
                     } else if (gameEnd == 2) {
                         turnCounter.innerHTML = "O is the Winner!";
+                        //resetBtn.removeAttribute("d-none");
+                    } else if (turn == 10) {
+                        turnCounter.innerHTML = "Cat's Game! It's a tie!"
+                        //resetBtn.removeAttribute("d-none");
                     }
                 }
             }
@@ -74,7 +79,7 @@ function winCheck(arr) {
         return checkValues(arr[0], arr[4], arr[8]);
     } else if (checkValues(arr[2], arr[4], arr[6]) == 1 || checkValues(arr[2], arr[4], arr[6]) == 2) {
         return checkValues(arr[2], arr[4], arr[6]);
-    }
+    } 
 }
 
 function checkValues(a, b, c) {
@@ -94,12 +99,16 @@ function checkValues(a, b, c) {
 }
 /* Reset Game Button */
 function gameReset() {
-    
+    checkGrid = [0,0,0,0,0,0,0,0,0];
+    turn = 1;
+    pageLayout();
+
 }
 
 
 /* Page Setup */
 function pageLayout() {
+    app.innerHTML = "";
     app.setAttribute("class", "container");
     for (var i = 0; i < 5; i++) {
         var div = document.createElement("div");
@@ -119,8 +128,9 @@ function pageLayout() {
             div.appendChild(turnCounter);
         } else if (i == 3) {
             var resetBtn = document.createElement("button");
-            resetBtn.setAttribute("class", "btn btn-secondary mx-auto");
+            resetBtn.setAttribute("class", "btn btn-dark mx-auto");
             resetBtn.innerHTML = "RESET GAME";
+            resetBtn.addEventListener("click", gameReset);
             div.appendChild(resetBtn);
         }
         app.appendChild(div);
