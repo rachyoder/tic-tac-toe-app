@@ -1,9 +1,12 @@
 
 .manjariFont {
     font-family: 'Manjari', sans-serif;
+    color: #003399;
 }
 .markerFont {
     font-family: 'Permanent Marker', cursive;
+    color: #003399;
+
 }
 .col-4.px-5.py-5.border.grid {
     position: relative;
@@ -12,7 +15,6 @@
 html, body {
     background-color: #ffdccc;
 }
-
-div#0 {
-    border: 5px solid black;
+#resetBtn {
+    background-color: #003399
 }
