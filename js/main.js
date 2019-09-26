@@ -1,5 +1,4 @@
 var app = document.getElementById("app");
-var self = this;
 var turn = 1;
 var checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -24,30 +23,32 @@ function createBoard(grid) {
 
         /* Checking for clicks */
         col.addEventListener("click", function (e) {
-            if (checkGrid[e.target.id] == 0) {
-                if (turn % 2 == 0) { //Turn for o
-                    checkGrid[e.target.id] = 2;
-                    this.innerHTML = "O";
-                    console.log("o");
-                } else { //Turn for x
-                    checkGrid[e.target.id] = 1;
-                    this.innerHTML = "X";
-                    console.log("x");
+            //check for wins first - then run turn
+            var result = winCheck(checkGrid);
+            if (result == 1) {
+                console.log("X is the winner!");
+            } else if (result == 2) {
+                console.log("O is the winner!");
+            } else {
+                if (checkGrid[e.target.id] == 0) {
+                    if (turn % 2 == 0) { //Turn for o
+                        checkGrid[e.target.id] = 2;
+                        this.innerHTML = "O";
+                        turnCounter.innerHTML = "Current Turn: X";
+                    } else { //Turn for x
+                        checkGrid[e.target.id] = 1;
+                        this.innerHTML = "X";
+                        turnCounter.innerHTML = "Current Turn: O";
+                    }
+                    turn++;
+                    var gameEnd = winCheck(checkGrid);
+                    if (gameEnd == 1) {
+                        turnCounter.innerHTML = "X is the Winner!";
+                    } else if (gameEnd == 2) {
+                        turnCounter.innerHTML = "O is the Winner!";
+                    }
                 }
-                turn++;
-                //console.log(turn);
             }
-            if (turn >= 6) { //check for wins as soon as possible
-                var result = winCheck(checkGrid);
-                if (result == 1) {
-                    console.log("X is the winner!");
-                    col.removeEventListener("click", click(e));
-                } else if (result == 2) {
-                    console.log("O is the winner!");
-                    col.removeEventListener("click", click(e));
-                }
-            }
-
         })
         col.appendChild(letter);
         row.appendChild(col);
@@ -91,6 +92,11 @@ function checkValues(a, b, c) {
     }
 
 }
+/* Reset Game Button */
+function gameReset() {
+    
+}
+
 
 /* Page Setup */
 function pageLayout() {
@@ -107,7 +113,15 @@ function pageLayout() {
             createBoard(div);
         } else if (i == 2) {
             var turnCounter = document.createElement("p");
-            //turnCounter.setAttribute("class", "")
+            turnCounter.setAttribute("class", "mx-auto manjariFont");
+            turnCounter.setAttribute("id", "turnCounter");
+            turnCounter.textContent = "X Starts the Game...";
+            div.appendChild(turnCounter);
+        } else if (i == 3) {
+            var resetBtn = document.createElement("button");
+            resetBtn.setAttribute("class", "btn btn-secondary mx-auto");
+            resetBtn.innerHTML = "RESET GAME";
+            div.appendChild(resetBtn);
         }
         app.appendChild(div);
     }
