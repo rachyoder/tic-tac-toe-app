@@ -15,8 +15,9 @@ function createBoard(grid) {
     for (var i = 0; i < 9; i++) {
         var col = document.createElement("div");
         var letter = document.createElement("h2");
-        letter.setAttribute("class", "manjariFont position-absolute ")
-        var classStr = "col-4 display-4 position-relative manjariFont px-5 py-5 text-center border border-dark grid"
+        letter.setAttribute("class", "manjariFont")
+        var classStr = "col-4 display-4 manjariFont px-3 py-3 text-center border border-dark grid"
+        col.setAttribute('style', "height: 100px; width: 100px;");
         col.setAttribute("id", i);
         letter.setAttribute("id", i);
         col.setAttribute("class", classStr);
@@ -129,6 +130,7 @@ function pageLayout() {
         } else if (i == 3) {
             var resetBtn = document.createElement("button");
             resetBtn.setAttribute("class", "btn btn-dark mx-auto");
+            resetBtn.setAttribute("id", "resetBtn");
             resetBtn.innerHTML = "RESET GAME";
             resetBtn.addEventListener("click", gameReset);
             div.appendChild(resetBtn);
