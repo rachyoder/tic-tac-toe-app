@@ -1,6 +1,6 @@
 var app = document.getElementById("app");
 var self = this;
-var playerStates = 1;
+var turn = 1;
 var checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 /* Board Setup */
@@ -12,6 +12,7 @@ function createBoard(grid) {
     row.setAttribute("class", "row mx-4");
     for (var i = 0; i < 9; i++) {
         var col = document.createElement("div");
+        var letter = document.createElement("h2");
         var classStr = "col-4 px-5 py-5 border grid"
         if (i == 0) {
             classStr.concat("col1 row1 diagLeft");
@@ -33,12 +34,25 @@ function createBoard(grid) {
             classStr.concat("col3 row3 diagLeft");
         }
         col.setAttribute("id", i);
+        letter.setAttribute("id", i);
         col.setAttribute("class", classStr);
         col.addEventListener("click", function (e) {
-            
+            if (checkGrid[e.target.id] == 0) {
+                //console.log(e.target.id, document.getElementById());
+                if (turn % 2 == 0) { //Turn for o
+                    checkGrid[e.target.id] = 2;
+                    this.innerHTML = "O";
+                    console.log("o");
+                } else { //Turn for x
+                    checkGrid[e.target.id] = 1;
+                    this.innerHTML = "X";
+                    console.log("x");
+                }
+                turn++;
+            }
 
-            checkGrid[e.target.id] = 9;
         })
+        col.appendChild(letter);
         row.appendChild(col);
     }
     boardContainer.appendChild(row);
@@ -61,17 +75,17 @@ function pageLayout() {
         app.appendChild(div);
     }
     var grid = document.getElementsByClassName("grid");
-    
-    console.log(grid);
+
+    //console.log(grid);
     //positionCheck(grid, checkGrid);
 }
 
 /* Check Win Conditions */
-// var checkRowOne = document.getElementsByClassName("row1");
-// var checkRowTwo = document.getElementsByClassName("row2"); 
-// var checkRowThree = document.getElementsByClassName("row3"); 
-// var checkColOne = document.getElementsByClassName("col1"); 
-// var checkColTwo = document.getElementsByClassName("col2"); 
-// var checkColThree = document.getElementsByClassName("col3"); 
-// var checkDiagLeft = document.getElementsByClassName("diagLeft"); 
-// var checkDiagRight = document.getElementsByClassName("diagRight"); 
+var checkRowOne = document.getElementsByClassName("row1");
+var checkRowTwo = document.getElementsByClassName("row2"); 
+var checkRowThree = document.getElementsByClassName("row3"); 
+var checkColOne = document.getElementsByClassName("col1"); 
+var checkColTwo = document.getElementsByClassName("col2"); 
+var checkColThree = document.getElementsByClassName("col3"); 
+var checkDiagLeft = document.getElementsByClassName("diagLeft"); 
+var checkDiagRight = document.getElementsByClassName("diagRight"); 
