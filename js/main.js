@@ -13,6 +13,7 @@ function createBoard(grid) {
     for (var i = 0; i < 9; i++) {
         var col = document.createElement("div");
         var letter = document.createElement("h2");
+        letter.setAttribute("class", "")
         var classStr = "col-4 px-5 py-5 border grid"
         if (i == 0) {
             classStr.concat("col1 row1 diagLeft");
