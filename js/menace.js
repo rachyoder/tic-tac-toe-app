@@ -1,45 +1,50 @@
 /* Global Variables */
-var states = { "0,0,0,0,0,0,0,0,0": [0, 0, 0, 0, 0, 0, 0, 0, 0] };
+var states = { "[0,0,0]": [0, 0, 0] };
+var keyStates = Object.keys(states);
+var overarchCount = 1, temp = 0;
+var savePos = 1;
 
-var possibleOut = 1, count = 0, symCheck = 1;
+var possibleOut = 1, symCount = 1;
 for (var i = 0; i < possibleOut; i++) {
-    for (var j = 0; j, arr.length; j++) {
+    var count = 0;
+    temp++;
+    //console.log({ keyStates });
+    //console.log(keyStates[i]);
+    var arr = JSON.parse(keyStates[i]);
+    //console.log({ arr });
+    for (var j = 0; j < arr.length; j++) {
+        var newArr = JSON.parse(JSON.stringify(arr));
+        //console.log({ "arr[j]": arr[j] });
         if (arr[j] == 0) {
-            count++;
-            if (symCheck % 2 != 0) { //need to modify the string at the 
-                //arr.splice(j, 1, 1);
-                symCheck++;
-            } else {
-                //arr.splice(j, 1, 2);
-                symCheck++;
+            //console.log({ newArr, symCount });
+            newArr[j] = symCount;
+            //console.log({ newArr });
+
+            var stateKey = "[" + newArr.join() + "]";
+            if (stateKey == "[2,1,2]") {
+                console.log({ states, keyStates, stateKey, count, symCount, possibleOut, newArr, arr, i, j })
             }
-            stateKey = arr.join();
             if (!(stateKey in states)) {
-                states[stateKey] = arr;
+                keyStates.push(stateKey);
+                states[stateKey] = newArr;
+                count++;
             }
         }
-
     }
     possibleOut += count;
-    symCheck = 1;
+    //console.log({ possibleOut });
+    if (i == (possibleOut - 1)) {
+        if (temp == overarchCount) {
+            savePos = possibleOut;
+
+            overarchCount = possibleOut - savePos;
+            temp = 0;
+            if (symCount == 1) {
+                symCount = 2;
+            } else {
+                symCount = 1;
+            }
+        }
+    }
+    //console.log({ states, keyStates });
 }
-
-function createArr() {
-    var arr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var xCount = 0, oCount = 0, totalCount = 1;
-
-}
-
-
-/* Create all possible states */
-// var i = 0;
-// while (i < 305) {
-//     var stateObj;
-//     var stateKey = stateObj.join();
-//     if (!(stateKey in states)) {
-        // states[stateKey] = stateObj;
-//         i++;
-//     }
-// }
-// console.log(states);
-// console.log(Object.keys(states));
