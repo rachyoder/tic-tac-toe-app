@@ -1,15 +1,22 @@
 /* Global Variables */
 var states = { "[0,0,0,0,0,0,0,0,0]": [0, 0, 0, 0, 0, 0, 0, 0, 0] };
 var keyStates = Object.keys(states);
-var overarchCount = 1, temp = 0;
-var savePos = 1;
-var count = 0;
 
-var possibleOut = 1, symbol = 1;
+var possibleOut = 1, symbol = 1, count = 0;
+var beadCount = 4, xTurn = 1;
+
+var rotate = [2,5,8,1,4,7,0,3,6]; // 90 degree
+
+function rotation(state) {
+    for (var k = 0; k < rotate.length; k++) {
+        console.log (rotate[k]);
+    }
+}
+
+/* STATE GENERATION */
 
 //Loop through all items in Object State
 for (var i = 0; i < possibleOut; i++) {
-    temp++;
     var arr = JSON.parse(keyStates[i]);
 
     //Loop through array pulled from Object
@@ -19,18 +26,14 @@ for (var i = 0; i < possibleOut; i++) {
         //If current array position is 0
         if (arr[j] == 0) {
             newArr[j] = symbol;
+            console.log({newArr});
             var stateKey = "[" + newArr.join() + "]";
-
-            if (stateKey == "[2,1,2]") {
-                //console.log({ states, keyStates, stateKey, count, symbol, possibleOut, newArr, arr, i, j })
-            }
 
             //If current state is not in object, add it and increase count
             if (!(stateKey in states)) {
                 keyStates.push(stateKey);
                 states[stateKey] = newArr;
                 count++;
-                //console.log({ count });
             }
         }
     }
@@ -38,18 +41,11 @@ for (var i = 0; i < possibleOut; i++) {
     if (i == (possibleOut - 1)) {
         possibleOut += count;
         count = 0;
-        //console.log({ temp, overarchCount });
         if (symbol == 1) {
-            symbol = 2;
+            symbol = 2; //O
         } else {
             symbol = 1;
+            xTurn += 2 //X
         }
     }
-    //     if (temp == overarchCount) {
-    //         savePos = possibleOut;
-
-    //         overarchCount = possibleOut - savePos;
-    //         temp = 0;
-    // }
-    //console.log({ states, keyStates });
 }
