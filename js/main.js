@@ -45,13 +45,10 @@ function createBoard(grid) {
                     var gameEnd = winCheck(checkGrid);
                     if (gameEnd == 1) {
                         turnCounter.innerHTML = "X is the Winner!";
-                        //resetBtn.removeAttribute("d-none");
                     } else if (gameEnd == 2) {
                         turnCounter.innerHTML = "O is the Winner!";
-                        //resetBtn.removeAttribute("d-none");
                     } else if (turn == 10) {
                         turnCounter.innerHTML = "Cat's Game! It's a tie!"
-                        //resetBtn.removeAttribute("d-none");
                     }
                 }
             }
@@ -100,9 +97,9 @@ function checkValues(a, b, c) {
 }
 /* Reset Game Button */
 function gameReset() {
-    checkGrid = [0,0,0,0,0,0,0,0,0];
-    turn = 1;
-    pageLayout();
+        checkGrid = [0,0,0,0,0,0,0,0,0];
+        turn = 1;
+        pageLayout();
 
 }
 
@@ -114,20 +111,20 @@ function pageLayout() {
     for (var i = 0; i < 5; i++) {
         var div = document.createElement("div");
         div.setAttribute("class", "row mb-4");
-        if (i == 0) {
+        if (i == 0) { //Set up Title
             var title = document.createElement("h1");
             title.setAttribute("class", "display-4 mx-auto mb-6 markerFont");
             title.textContent = "Tic Tac Toe";
             div.appendChild(title);
-        } else if (i == 1) {
+        } else if (i == 1) { //Board Layout
             createBoard(div);
-        } else if (i == 2) {
+        } else if (i == 2) { //Turn Counter Setup
             var turnCounter = document.createElement("p");
             turnCounter.setAttribute("class", "mx-auto manjariFont");
             turnCounter.setAttribute("id", "turnCounter");
             turnCounter.textContent = "X Starts the Game...";
             div.appendChild(turnCounter);
-        } else if (i == 3) {
+        } else if (i == 3) { //Reset Button
             var resetBtn = document.createElement("button");
             resetBtn.setAttribute("class", "btn btn-dark mx-auto");
             resetBtn.setAttribute("id", "resetBtn");
@@ -137,5 +134,5 @@ function pageLayout() {
         }
         app.appendChild(div);
     }
-    var grid = document.getElementsByClassName("grid");
+    //var grid = document.getElementsByClassName("grid");
 }
