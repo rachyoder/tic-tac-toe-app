@@ -39,14 +39,15 @@ function winChecker(state) {
 //Loop through all items in Object State
 for (let i = 0; i < POSSIBLE_OUT; i++) {
     let arr = JSON.parse(KEY_STATES[i]);
+    let next_state_array = [];
 
     //Loop through array pulled from Object
     for (let j = 0; j < arr.length; j++) {
-        let new_arr = JSON.parse(JSON.stringify(arr));
+        let new_arr = JSON.parse(JSON.stringify(arr)); //Reset and Clone the Array
         //If current array position is 0
         if (arr[j] == 0) {
             new_arr[j] = SYMBOL;
-            let bead_arr = JSON.parse(JSON.stringify(new_arr));
+            let bead_arr = JSON.parse(JSON.stringify(new_arr)); //Reset and Clone the Array
             for (let k = 0; k < bead_arr.length; k++) {
                 if (bead_arr[k] == 0) {
                     bead_arr[k] = BEAD_COUNT;
@@ -57,8 +58,11 @@ for (let i = 0; i < POSSIBLE_OUT; i++) {
                 }
             }
             let state_key = "[" + new_arr.join() + "]";
+            next_state_array.push(state_key);
+            // console.log({next_state_array});
 
             //If current state is not in object, add it and increase count
+            STATES[KEY_STATES[i]].next_move = next_state_array;
             if (winChecker(new_arr)) {
                 if (!(state_key in STATES) && rotation(new_arr)) {
                     KEY_STATES.push(state_key);
@@ -99,9 +103,14 @@ function randomBeadSelector(bead_state) {
     }
 }
 
-function menaceMode() {
-    let idx = randomBeadSelector(STATES["[0,0,0,0,0,0,0,0,0]"]["beads"]);
+function menaceTurn(currBoard) {
+    let string_curr_board = JSON.stringify(currBoard);
+    let idx = randomBeadSelector(STATES[string_curr_board]["beads"]);
     console.log({ idx });
     document.getElementById(idx).click();
+    return idx;
+}
 
+function menaceMode() {
+    console.log("Clicked!");
 }

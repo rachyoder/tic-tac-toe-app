@@ -1,4 +1,4 @@
-var app = document.getElementById("app");
+/* Global Variables */
 var turn = 1;
 var checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 let winCondit = [
@@ -12,6 +12,7 @@ let winCondit = [
     [2, 4, 6]
 ];
 
+/* Check Which Player Goes */
 function turnCheck(e) {
     //check for wins first - then run turn
     var result = winCheck(checkGrid);
@@ -69,28 +70,20 @@ function createBoard(grid) {
     }
     boardContainer.appendChild(row);
 }
+
 /* Check Win Conditions */
-// Clean me!
 function winCheck(arr) {
-    if (checkValues(arr[0], arr[1], arr[2]) == 1 || checkValues(arr[0], arr[1], arr[2]) == 2) {
-        return checkValues(arr[0], arr[1], arr[2]);
-    } else if (checkValues(arr[3], arr[4], arr[5]) == 1 || checkValues(arr[3], arr[4], arr[5]) == 2) {
-        return checkValues(arr[3], arr[4], arr[5]);
-    } else if (checkValues(arr[6], arr[7], arr[8]) == 1 || checkValues(arr[6], arr[7], arr[8]) == 2) {
-        return checkValues(arr[6], arr[7], arr[8]);
-    } else if (checkValues(arr[0], arr[3], arr[6]) == 1 || checkValues(arr[0], arr[3], arr[6]) == 2) {
-        return checkValues(arr[0], arr[3], arr[6]);
-    } else if (checkValues(arr[1], arr[4], arr[7]) == 1 || checkValues(arr[1], arr[4], arr[7]) == 2) {
-        return checkValues(arr[1], arr[4], arr[7]);
-    } else if (checkValues(arr[2], arr[5], arr[8]) == 1 || checkValues(arr[2], arr[5], arr[8]) == 2) {
-        return checkValues(arr[2], arr[5], arr[8]);
-    } else if (checkValues(arr[0], arr[4], arr[8]) == 1 || checkValues(arr[0], arr[4], arr[8]) == 2) {
-        return checkValues(arr[0], arr[4], arr[8]);
-    } else if (checkValues(arr[2], arr[4], arr[6]) == 1 || checkValues(arr[2], arr[4], arr[6]) == 2) {
-        return checkValues(arr[2], arr[4], arr[6]);
+    for (let j = 0; j < winCondit.length; j++) {
+        if (checkValues(
+            arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]] == 1 ||
+        arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]] == 2
+        )) {
+            return arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]];
+        }
     }
 }
 
+/* Adds up values in Array for Win Condition/s */
 function checkValues(a, b, c) {
     // if either a, b, or c == 0, return 0
     if (a == 0 || b == 0 || c == 0) {
@@ -106,64 +99,10 @@ function checkValues(a, b, c) {
     }
 
 }
+
 /* Reset Game Button */
 function gameReset() {
     checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     turn = 1;
     pageLayout();
-
-}
-
-
-/* Page Setup */
-function pageLayout() {
-    app.innerHTML = "";
-    app.setAttribute("class", "container");
-    for (var i = 0; i < 5; i++) {
-        var div = document.createElement("div");
-        div.setAttribute("class", "row mb-4");
-        if (i == 0) { //Set up Title
-            var title = document.createElement("h1");
-            title.setAttribute("class", "display-4 mx-auto mb-6 markerFont");
-            title.textContent = "Tic Tac Toe";
-            div.appendChild(title);
-
-        } else if (i == 1) { //Board Layout
-            createBoard(div);
-
-        } else if (i == 2) { //Turn Counter Setup
-            var turnCounter = document.createElement("p");
-            turnCounter.setAttribute("class", "mx-auto manjariFont");
-            turnCounter.setAttribute("id", "turnCounter");
-            turnCounter.textContent = "X Starts the Game...";
-            div.appendChild(turnCounter);
-
-        } else if (i == 3) { //Reset Button and Menace Mode
-            var resetBtn = document.createElement("button");
-            resetBtn.setAttribute("class", "btn btn-dark mx-auto");
-            resetBtn.setAttribute("id", "resetBtn");
-            resetBtn.innerHTML = "RESET GAME";
-            
-            var menaceToggleDiv = document.createElement("div");
-            var menaceToggleInput = document.createElement("input");
-            var menaceToggleLabel = document.createElement("label");
-            menaceToggleDiv.setAttribute("class", "custom-control custom-switch mx-auto");
-
-            menaceToggleInput.setAttribute("class", "custom-control-input ml-3");
-            menaceToggleInput.setAttribute("type", "checkbox");
-            menaceToggleInput.setAttribute("id", "toggleMenace");
-            menaceToggleInput.addEventListener("change", menaceMode);
-
-            menaceToggleLabel.setAttribute("class", "custom-control-label manjariFont");
-            menaceToggleLabel.setAttribute("for", "toggleMenace");
-            menaceToggleLabel.innerHTML = "Menace Mode";
-
-            menaceToggleDiv.appendChild(menaceToggleInput);
-            menaceToggleDiv.appendChild(menaceToggleLabel);
-            div.appendChild(menaceToggleDiv);
-            resetBtn.addEventListener("click", gameReset);
-            div.appendChild(resetBtn);
-        }
-        app.appendChild(div);
-    }
 }
