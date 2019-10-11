@@ -51,6 +51,10 @@ function pageLayout() {
             menaceToggleDiv.appendChild(menaceToggleInput);
             menaceToggleDiv.appendChild(menaceToggleLabel);
             div.appendChild(menaceToggleDiv);
+        } else if (i == 4) {
+            //Create Table for Win Check
+            let table_main = document.createElement("table");
+            let table_head = document.createElement("thead");
         }
         app.appendChild(div);
     }

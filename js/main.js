@@ -24,7 +24,7 @@ function turnCheck(e) {
         // let menace_select = menaceTurn(checkGrid);
         if (checkGrid[e.target.id] == 0) {
             if (turn % 2 == 0) { //Turn for o
-                if(MENACE_ACTIVE) {
+                if (MENACE_ACTIVE) {
                     turnCounter.innerHTML = "MENACE is thinking...";
                 } else {
                     turnCounter.innerHTML = "Current Turn: X";
@@ -53,10 +53,38 @@ function turnCheck(e) {
                 turnCounter.innerHTML = "Cat's Game! It's a tie!"
             }
         }
-    }   
-    if  (turn % 2 == 1 && MENACE_ACTIVE) {
-        let x_pos = menaceTurn(checkGrid);
-        document.getElementById(x_pos).click();
+    }
+    if (winCheck(checkGrid) == 1) {
+        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
+            let stringify = TURN_STATE_TRACKER[i].current_board;
+            console.log(STATES[stringify]);
+            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx] += 3;
+        }
+    } else if (winCheck(checkGrid) == 2) {
+        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
+            let stringify = TURN_STATE_TRACKER[i].current_board;
+            console.log(STATES[stringify]);
+            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]--;
+        }
+    } else if (turn == 10) {
+        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
+            let stringify = TURN_STATE_TRACKER[i].current_board;
+            console.log(STATES[stringify]);
+            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]++;
+        }
+    } else {
+        if (turn % 2 == 1 && MENACE_ACTIVE) {
+            setTimeout(function () {
+                let x_pos = menaceTurn(checkGrid);
+                //             checkGrid[x_pos] = 1;
+                document.getElementById(x_pos).click();
+            }, 1000);
+            console.log({ TURN_STATE_TRACKER });
+        }
+
     }
 }
 

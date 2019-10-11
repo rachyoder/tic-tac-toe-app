@@ -8,6 +8,8 @@ let BEAD_COUNT = 4, X_TURN = 1;
 let MENACE_ACTIVE = false;
 let ROTATE = [2, 5, 8, 1, 4, 7, 0, 3, 6]; // 90 degree
 
+let TURN_STATE_TRACKER = [];
+
 
 /* ROTATION OF STATE */
 
@@ -102,6 +104,8 @@ function randomBeadSelector(bead_state) {
         if (Number.isInteger(bead_state[y])) {
             total += bead_state[y];
             if (total >= bead_num) {
+                let current_turn_info = {"bead_idx": y, "bead_state": bead_state, "current_board": checkGrid};
+                TURN_STATE_TRACKER.push(current_turn_info);
                 return y;
             }
         }
@@ -111,7 +115,6 @@ function randomBeadSelector(bead_state) {
 function menaceTurn(currBoard) {
     let string_curr_board = JSON.stringify(currBoard);
     let idx = randomBeadSelector(STATES[string_curr_board]["beads"]);
-    console.log({ idx });
     return idx;
 }
 
@@ -119,9 +122,9 @@ function menaceMode() {
     if (document.getElementById("toggleMenace").checked) {
         MENACE_ACTIVE = true;
         let menaceId = menaceTurn(checkGrid);
+        // checkGrid[menaceId] = 1;
         document.getElementById(menaceId).click();
     } else {
         MENACE_ACTIVE = false;
     }
-    console.log(MENACE_ACTIVE);
 }
