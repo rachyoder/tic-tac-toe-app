@@ -4,6 +4,7 @@ var app = document.getElementById("app");
 function pageLayout() {
     app.innerHTML = "";
     app.setAttribute("class", "container");
+
     for (var i = 0; i < 5; i++) {
         var div = document.createElement("div");
         div.setAttribute("class", "row mb-4");
@@ -24,7 +25,7 @@ function pageLayout() {
             div.appendChild(turnCounter);
 
         } else if (i == 3) { //Reset Button and Menace Mode
-            
+
             // Create Reset Button
             var resetBtn = document.createElement("button");
             resetBtn.setAttribute("class", "btn btn-dark mx-auto");
@@ -54,8 +55,59 @@ function pageLayout() {
         } else if (i == 4) {
             //Create Table for Win Check
             let table_main = document.createElement("table");
+            table_main.setAttribute("class", "table table-borderless ");
             let table_head = document.createElement("thead");
+            
+            let table_row_head = document.createElement("tr");
+            for (let j = 0; j < 3; j++) {
+                if (j == 0) {
+                    let table_head_input = document.createElement("th");
+                    table_head_input.setAttribute("class", "text-center manjariFont");
+                    table_head_input.innerHTML = "MENACE WINS";
+                    table_row_head.appendChild(table_head_input);
+                } else if (j == 1) {
+                    let table_head_input = document.createElement("th");
+                    table_head_input.setAttribute("class", "text-center manjariFont");
+                    table_head_input.innerHTML = "MENACE TIES";
+                    table_row_head.appendChild(table_head_input);
+                } else if (j == 2) {
+                    let table_head_input = document.createElement("th");
+                    table_head_input.setAttribute("class", "text-center manjariFont");
+                    table_head_input.innerHTML = "MENACE LOSSES";
+                    table_row_head.appendChild(table_head_input);
+                }
+                table_head.appendChild(table_row_head);
+            }
+            table_main.appendChild(table_head);
+            let table_body = document.createElement("tbody");
+            
+            let table_row = document.createElement("tr");
+            for (let k = 0; k < 3; k++) {
+                if (k == 0 ) {
+                    let table_item = document.createElement("td");
+                    table_item.setAttribute("class", "text-center");
+                    table_item.innerHTML = TOTAL_WIN;
+                    table_row.appendChild(table_item);
+                } else if (k == 1) {
+                    let table_item = document.createElement("td");
+                    table_item.setAttribute("class", "text-center");
+                    table_item.innerHTML = TOTAL_TIE;
+                    table_row.appendChild(table_item);
+                } else if (k == 2) {
+                    let table_item = document.createElement("td");
+                    table_item.setAttribute("class", "text-center");
+                    table_item.innerHTML = TOTAL_LOSS;
+                    table_row.appendChild(table_item);
+                }
+                table_body.appendChild(table_row);
+            }
+            table_main.appendChild(table_body);
+            div.appendChild(table_main);
         }
         app.appendChild(div);
+    }
+    if (MENACE_ACTIVE) {
+        document.getElementById("toggleMenace").setAttribute("checked", "true");
+        menaceMode();
     }
 }

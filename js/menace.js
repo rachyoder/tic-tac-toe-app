@@ -104,7 +104,7 @@ function randomBeadSelector(bead_state) {
         if (Number.isInteger(bead_state[y])) {
             total += bead_state[y];
             if (total >= bead_num) {
-                let current_turn_info = {"bead_idx": y, "bead_state": bead_state, "current_board": KEY_STATES.findIndex(findKeyState)};
+                let current_turn_info = { "bead_idx": y, "bead_state": bead_state, "current_board": KEY_STATES.findIndex(findKeyState) };
                 TURN_STATE_TRACKER.push(current_turn_info);
                 return y;
             }

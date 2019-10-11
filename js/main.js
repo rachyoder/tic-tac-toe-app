@@ -11,6 +11,7 @@ let winCondit = [
     [0, 4, 8],
     [2, 4, 6]
 ];
+let TOTAL_WIN = 0, TOTAL_LOSS = 0, TOTAL_TIE = 0;
 
 /* Check Which Player Goes */
 function turnCheck(e) {
@@ -46,7 +47,11 @@ function turnCheck(e) {
             turn++;
             var gameEnd = winCheck(checkGrid);
             if (gameEnd == 1) {
-                turnCounter.innerHTML = "X is the Winner!";
+                if (MENACE_ACTIVE) {
+                    turnCounter.innerHTML = "MENACE is the Winner, you feeble Human!"
+                } else {
+                    turnCounter.innerHTML = "X is the Winner!";
+                }
             } else if (gameEnd == 2) {
                 turnCounter.innerHTML = "O is the Winner!";
             } else if (turn == 10) {
@@ -62,20 +67,27 @@ function turnCheck(e) {
                 let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
                 STATES[KEY_STATES[key_state_board]].beads[bead_state_idx] += 3;
             }
+            TOTAL_WIN++;
+            setTimeout(function() {gameReset();}, 3000);
+
         } else if (winCheck(checkGrid) == 2) {
             for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
                 let key_state_board = TURN_STATE_TRACKER[i].current_board;
                 let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
                 STATES[KEY_STATES[key_state_board]].beads[bead_state_idx]--;
             }
-            
+            TOTAL_LOSS++;
+            setTimeout(function() {gameReset();}, 3000);
+
         } else if (turn == 10) {
             for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
                 let key_state_board = TURN_STATE_TRACKER[i].current_board;
                 let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
                 STATES[KEY_STATES[key_state_board]].beads[bead_state_idx]++;
             }
-            
+            TOTAL_TIE++;
+            setTimeout(function() {gameReset();}, 3000);
+
         } else {
             if (turn % 2 == 1) {
                 setTimeout(function () {
@@ -146,9 +158,7 @@ function checkValues(a, b, c) {
 /* Reset Game Button */
 function gameReset() {
     console.log(MENACE_ACTIVE);
-    if (MENACE_ACTIVE) {
-        document.getElementById("toggleMenace").checked = true;
-    }
+    TURN_STATE_TRACKER = [];
     checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     turn = 1;
     pageLayout();
