@@ -54,36 +54,38 @@ function turnCheck(e) {
             }
         }
     }
-    if (winCheck(checkGrid) == 1) {
-        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
-            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
-            let stringify = TURN_STATE_TRACKER[i].current_board;
-            console.log(STATES[stringify]);
-            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx] += 3;
+    if (MENACE_ACTIVE) {
+        /* Checks Winner For Menace */
+        if (winCheck(checkGrid) == 1) {
+            for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+                let key_state_board = TURN_STATE_TRACKER[i].current_board;
+                let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
+                STATES[KEY_STATES[key_state_board]].beads[bead_state_idx] += 3;
+            }
+        } else if (winCheck(checkGrid) == 2) {
+            for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+                let key_state_board = TURN_STATE_TRACKER[i].current_board;
+                let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
+                STATES[KEY_STATES[key_state_board]].beads[bead_state_idx]--;
+            }
+            
+        } else if (turn == 10) {
+            for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
+                let key_state_board = TURN_STATE_TRACKER[i].current_board;
+                let bead_state_idx = TURN_STATE_TRACKER[i].bead_idx
+                STATES[KEY_STATES[key_state_board]].beads[bead_state_idx]++;
+            }
+            
+        } else {
+            if (turn % 2 == 1) {
+                setTimeout(function () {
+                    let x_pos = menaceTurn(checkGrid);
+                    document.getElementById(x_pos).click();
+                }, 1000);
+                console.log({ TURN_STATE_TRACKER });
+            }
         }
-    } else if (winCheck(checkGrid) == 2) {
-        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
-            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
-            let stringify = TURN_STATE_TRACKER[i].current_board;
-            console.log(STATES[stringify]);
-            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]--;
-        }
-    } else if (turn == 10) {
-        for (let i = 1; i <= TURN_STATE_TRACKER.length; i += 2) {
-            console.log(TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]);
-            let stringify = TURN_STATE_TRACKER[i].current_board;
-            console.log(STATES[stringify]);
-            TURN_STATE_TRACKER[i].bead_state[TURN_STATE_TRACKER[i].bead_idx]++;
-        }
-    } else {
-        if (turn % 2 == 1 && MENACE_ACTIVE) {
-            setTimeout(function () {
-                let x_pos = menaceTurn(checkGrid);
-                //             checkGrid[x_pos] = 1;
-                document.getElementById(x_pos).click();
-            }, 1000);
-            console.log({ TURN_STATE_TRACKER });
-        }
+
 
     }
 }
@@ -143,6 +145,10 @@ function checkValues(a, b, c) {
 
 /* Reset Game Button */
 function gameReset() {
+    console.log(MENACE_ACTIVE);
+    if (MENACE_ACTIVE) {
+        document.getElementById("toggleMenace").checked = true;
+    }
     checkGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     turn = 1;
     pageLayout();

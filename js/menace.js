@@ -12,7 +12,7 @@ let TURN_STATE_TRACKER = [];
 
 
 /* ROTATION OF STATE */
-
+//inactive
 function rotation(state) {
     for (let l = 0; l < 3; l++) {
         let rotate_state = [];
@@ -104,7 +104,7 @@ function randomBeadSelector(bead_state) {
         if (Number.isInteger(bead_state[y])) {
             total += bead_state[y];
             if (total >= bead_num) {
-                let current_turn_info = {"bead_idx": y, "bead_state": bead_state, "current_board": checkGrid};
+                let current_turn_info = {"bead_idx": y, "bead_state": bead_state, "current_board": KEY_STATES.findIndex(findKeyState)};
                 TURN_STATE_TRACKER.push(current_turn_info);
                 return y;
             }
@@ -112,12 +112,14 @@ function randomBeadSelector(bead_state) {
     }
 }
 
+/* Selects Action for Each Turn */
 function menaceTurn(currBoard) {
     let string_curr_board = JSON.stringify(currBoard);
     let idx = randomBeadSelector(STATES[string_curr_board]["beads"]);
     return idx;
 }
 
+/* Toggles Menace Mode */
 function menaceMode() {
     if (document.getElementById("toggleMenace").checked) {
         MENACE_ACTIVE = true;
@@ -127,4 +129,8 @@ function menaceMode() {
     } else {
         MENACE_ACTIVE = false;
     }
+}
+
+function findKeyState(element) {
+    return element == JSON.stringify(checkGrid);
 }
