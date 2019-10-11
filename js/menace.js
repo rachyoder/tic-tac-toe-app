@@ -5,6 +5,7 @@ let KEY_STATES = Object.keys(STATES);
 let POSSIBLE_OUT = 1, SYMBOL = 1, COUNT = 0;
 let BEAD_COUNT = 4, X_TURN = 1;
 
+let MENACE_ACTIVE = false;
 let ROTATE = [2, 5, 8, 1, 4, 7, 0, 3, 6]; // 90 degree
 
 
@@ -64,7 +65,7 @@ for (let i = 0; i < POSSIBLE_OUT; i++) {
             //If current state is not in object, add it and increase count
             STATES[KEY_STATES[i]].next_move = next_state_array;
             if (winChecker(new_arr)) {
-                if (!(state_key in STATES) && rotation(new_arr)) {
+                if (!(state_key in STATES)) {
                     KEY_STATES.push(state_key);
                     STATES[state_key] = { new_arr, "beads": bead_arr, "BEAD_COUNT": BEAD_COUNT };
                     COUNT++;
@@ -92,13 +93,17 @@ function randomBeadSelector(bead_state) {
     let max = 0;
     let total = 0
     for (let x = 0; x < bead_state.length; x++) {
-        max += bead_state[x];
+        if (Number.isInteger(bead_state[x])) {
+            max += bead_state[x];
+        }
     }
     let bead_num = Math.floor((Math.random() * Math.floor(max)) + 1);
     for (let y = 0; y < bead_state.length; y++) {
-        total += bead_state[y];
-        if (total >= bead_num) {
-            return y;
+        if (Number.isInteger(bead_state[y])) {
+            total += bead_state[y];
+            if (total >= bead_num) {
+                return y;
+            }
         }
     }
 }
@@ -107,10 +112,16 @@ function menaceTurn(currBoard) {
     let string_curr_board = JSON.stringify(currBoard);
     let idx = randomBeadSelector(STATES[string_curr_board]["beads"]);
     console.log({ idx });
-    document.getElementById(idx).click();
     return idx;
 }
 
 function menaceMode() {
-    console.log("Clicked!");
+    if (document.getElementById("toggleMenace").checked) {
+        MENACE_ACTIVE = true;
+        let menaceId = menaceTurn(checkGrid);
+        document.getElementById(menaceId).click();
+    } else {
+        MENACE_ACTIVE = false;
+    }
+    console.log(MENACE_ACTIVE);
 }

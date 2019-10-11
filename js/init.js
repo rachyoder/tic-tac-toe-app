@@ -24,11 +24,16 @@ function pageLayout() {
             div.appendChild(turnCounter);
 
         } else if (i == 3) { //Reset Button and Menace Mode
+            
+            // Create Reset Button
             var resetBtn = document.createElement("button");
             resetBtn.setAttribute("class", "btn btn-dark mx-auto");
             resetBtn.setAttribute("id", "resetBtn");
             resetBtn.innerHTML = "RESET GAME";
+            resetBtn.addEventListener("click", gameReset);
+            div.appendChild(resetBtn);
 
+            // Create Menace Toggle
             var menaceToggleDiv = document.createElement("div");
             var menaceToggleInput = document.createElement("input");
             var menaceToggleLabel = document.createElement("label");
@@ -46,8 +51,6 @@ function pageLayout() {
             menaceToggleDiv.appendChild(menaceToggleInput);
             menaceToggleDiv.appendChild(menaceToggleLabel);
             div.appendChild(menaceToggleDiv);
-            resetBtn.addEventListener("click", gameReset);
-            div.appendChild(resetBtn);
         }
         app.appendChild(div);
     }

@@ -21,14 +21,26 @@ function turnCheck(e) {
     } else if (result == 2) {
         console.log("O is the winner!");
     } else {
+        // let menace_select = menaceTurn(checkGrid);
         if (checkGrid[e.target.id] == 0) {
             if (turn % 2 == 0) { //Turn for o
+                if(MENACE_ACTIVE) {
+                    turnCounter.innerHTML = "MENACE is thinking...";
+                } else {
+                    turnCounter.innerHTML = "Current Turn: X";
+                }
                 checkGrid[e.target.id] = 2;
                 this.innerHTML = "O";
-                turnCounter.innerHTML = "Current Turn: X";
             } else { //Turn for x
-                checkGrid[e.target.id] = 1;
-                this.innerHTML = "X";
+                if (MENACE_ACTIVE) {
+                    let menace_select = menaceTurn(checkGrid);
+                    checkGrid[menace_select] = 1;
+                    document.getElementById(menace_select).innerHTML = "X";
+
+                } else {
+                    checkGrid[e.target.id] = 1;
+                    this.innerHTML = "X";
+                }
                 turnCounter.innerHTML = "Current Turn: O";
             }
             turn++;
@@ -41,6 +53,10 @@ function turnCheck(e) {
                 turnCounter.innerHTML = "Cat's Game! It's a tie!"
             }
         }
+    }   
+    if  (turn % 2 == 1 && MENACE_ACTIVE) {
+        let x_pos = menaceTurn(checkGrid);
+        document.getElementById(x_pos).click();
     }
 }
 
@@ -74,11 +90,8 @@ function createBoard(grid) {
 /* Check Win Conditions */
 function winCheck(arr) {
     for (let j = 0; j < winCondit.length; j++) {
-        if (checkValues(
-            arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]] == 1 ||
-        arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]] == 2
-        )) {
-            return arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]];
+        if (checkValues(arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]]) == 1 || checkValues(arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]]) == 2) {
+            return checkValues(arr[winCondit[j][0]], arr[winCondit[j][1]], arr[winCondit[j][2]]);
         }
     }
 }
